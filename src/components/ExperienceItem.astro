@@ -1,56 +1,47 @@
 ---
-import LinkInline from "./LinkInline.astro"
-
 interface Props {
   title: string
   company: string
   description: string
-  link?: string
+  highlights: string[]
+  technologies: string[]
   date: string
 }
 
-const { title, company, description, link, date } = Astro.props
+const { title, company, description, highlights, technologies, date } = Astro.props
 ---
 
-<div
-  class="relative mx-12 pb-12 grid before:absolute before:left-[-35px] before:block before:h-full before:border-l-2 before:border-black/20 dark:before:border-white/15 before:content-[''] md:grid-cols-5 md:gap-10 md:space-x-4]"
->
-  <div class="relative pb-12 md:col-span-2">
-    <div class="sticky top-0">
-      <span class="text-yellow-400 -left-[42px] absolute rounded-full text-5xl"
-        >&bull;</span
-      >
+<article class="relative pb-14 pl-7 last:pb-0 sm:pl-10">
+  <span class="absolute -left-[7px] top-2 size-3 rounded-full bg-blue-600 ring-4 ring-gray-50 dark:bg-blue-400 dark:ring-gray-950"></span>
 
-      <h3 class="text-xl font-bold text-yellow-400">{title}</h3>
-      <h4 class="font-semibold text-xl text-gray-600 dark:text-white">{company}</h4>
-      <time class="p-0 m-0 text-sm text-gray-600/80 dark:text-white/80">{date}</time>
+  <div class="grid gap-5 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
+    <header>
+      <p class="text-sm font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300">{date}</p>
+      <h3 class="mt-2 text-xl font-bold text-slate-950 dark:text-white">{title}</h3>
+      <p class="mt-1 font-semibold text-slate-600 dark:text-slate-300">{company}</p>
+    </header>
+
+    <div>
+      <p class="leading-7 text-slate-700 dark:text-slate-300">{description}</p>
+      <ul class="mt-4 space-y-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+        {
+          highlights.map((highlight) => (
+            <li class="flex gap-3">
+              <span aria-hidden="true" class="mt-2 size-1.5 shrink-0 rounded-full bg-cyan-500"></span>
+              <span>{highlight}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <ul class="mt-5 flex flex-wrap gap-2" aria-label={`Tecnologías usadas en ${company}`}>
+        {
+          technologies.map((technology) => (
+            <li class="rounded-md bg-slate-200/70 px-2.5 py-1 text-xs font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+              {technology}
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </div>
-  <div class="relative flex flex-col gap-2 pb-4 text-gray-600 dark:text-gray-300 md:col-span-3">
-    {description}
-    {
-      link && (
-        <LinkInline href={link}>
-          Saber más{" "}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-5 icon icon-tabler icon-tabler-chevron-right"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <>
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M9 6l6 6l-6 6" />
-            </>
-          </svg>
-        </LinkInline>
-      )
-    }
-  </div>
-</div>
+</article>

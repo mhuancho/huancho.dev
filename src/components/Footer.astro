@@ -2,28 +2,20 @@
 const currentYear = new Date().getFullYear()
 ---
 
-<footer
-  class="opacity-80 m-4 min-[375px]:pl-4 md:pl-0 mt-16 w-full mx-auto container lg:max-w-4xl md:max-w-2xl mb-10 flex justify-center"
->
-  <div
-    class="rounded-lg w-full max-w-screen-xl mx-auto md:flex md:items-center md:justify-between py-4"
-  >
-    <span class="text-sm sm:text-center text-zinc-800/90 dark:text-zinc-200/90"
-      >© {currentYear}
-      <a href="" class="hover:underline">Mateo</a>. Casi
-      todos los derechos reservados
-    </span>
-    <ul
-      class="flex flex-wrap items-center mt-3 text-sm font-medium dark:text-white/90 sm:mt-0"
-    >
-      <li>
-        <a href="/#sobre-mi" class="hover:underline me-4 md:me-6">Sobre mí</a>
-      </li>
-      <li>
-        <a id="contacto" href="mailto:mhuanchom@gmail.com" class="hover:underline"
-          >Contacto</a
-        >
-      </li>
-    </ul>
+<footer class="mx-auto mt-20 w-full max-w-4xl px-5 pb-10 sm:px-6">
+  <div class="flex flex-col gap-4 border-t border-slate-200 pt-8 text-sm text-slate-600 dark:border-slate-800 dark:text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+    <p>
+      © {currentYear}
+      <a href="/#inicio" class="font-semibold text-slate-800 hover:text-blue-600 dark:text-slate-200 dark:hover:text-blue-300">
+        Mateo Huancho Mariño
+      </a>
+    </p>
+    <nav class="flex flex-wrap gap-5" aria-label="Enlaces del pie de página">
+      <a href="/#sobre-mi" class="transition hover:text-blue-600 dark:hover:text-blue-300">Perfil</a>
+      <a href="mailto:mhuanchom@gmail.com" class="transition hover:text-blue-600 dark:hover:text-blue-300">Contacto</a>
+      <a href="https://www.linkedin.com/in/mhuancho08" target="_blank" rel="noopener noreferrer" class="transition hover:text-blue-600 dark:hover:text-blue-300">
+        LinkedIn
+      </a>
+    </nav>
   </div>
 </footer>

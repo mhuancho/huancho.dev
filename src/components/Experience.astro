@@ -1,36 +1,54 @@
 ---
 import ExperienceItem from "./ExperienceItem.astro"
-const EXPERIENCE = [
-{
-    date: "mayo 2024 - actualidad",
-    title: "Analista Programador Semi Senior",
-    company: "COMPLEXLESS",
+
+const experiences = [
+  {
+    date: "Mayo 2024 - Actualidad",
+    title: "Backend Java Senior Developer",
+    company: "Complexless",
     description:
-      "La Ventanilla Única de Comercio Exterior – VUCE, es un sistema integrado que permite a los involucrados en operaciones de comercio y transporte gestionar, a través de internet y por una sola vía, los trámites requeridos por las entidades públicas para el ingreso, salida o tránsito de mercancías. Para la eficiencia y escalabilidad se ha usado Spring Boot java 17, base de datos postgreSQL, MongoDB y redis. arquitectura hexagonal, frontend de angular 17, SonarQube, test unitarios y integración continua con jenkins.",
-    link: "https://www.linkedin.com/in/mhuancho08" ,
+      "Diseño y desarrollo de soluciones empresariales con foco en backend, seguridad, integración, estandarización técnica y plataformas multi-tenant.",
+    highlights: [
+      "Implementación de IAM y MFA con Keycloak 26, SPI personalizados, OAuth2/OIDC/JWT y aprovisionamiento de usuarios legacy.",
+      "Diseño de microservicios contract-first y librerías corporativas reutilizables con Java 17/21, Quarkus y arquitectura hexagonal.",
+      "Integración de procesos con Kafka, Outbox Pattern, Camunda 7/8, Redis y APIs empresariales.",
+      "Evolución de VUCE 2.0 y procesos portuarios con pruebas, SonarQube, trazabilidad y automatización operativa.",
+    ],
+    technologies: ["Java 17/21", "Spring Boot", "Quarkus", "Micronaut", "Keycloak", "Camunda", "Angular"],
   },
   {
-    date: "Octubre 2018 - mayo 2024",
-    title: "Analista programador",
-    company: "SAGONE - TECHERA",
+    date: "Octubre 2018 - Abril 2024",
+    title: "Java Developer",
+    company: "Sagone - Techera",
     description:
-      "STE - Sistema de Transmisión Eléctrica (OSINERGMIN) para los reportes de planes de inversión y electricidad Desarrollo principal en Java 8 y 11, con un enfoque en la eficiencia y escalabilidad utilizando Spring Boot Y Spring Webflux para aplicaciones reactivas. Se usó las bases de datos relacionales (SQL) como Oracle 12g y bases de datos NoSQL como MongoDB",
-    link: "https://www.linkedin.com/in/mhuancho08" ,
+      "Desarrollo, evolución e integración de soluciones empresariales para sectores regulados y organizaciones con operación continua.",
+    highlights: [
+      "Automatización de procesos regulatorios del Sistema de Transmisión Eléctrica de OSINERGMIN con Java, Spring Boot, Camunda 7 y Redis.",
+      "Desarrollo y mantenimiento de FACILITO para Android, integrando APIs REST, geolocalización y escenarios de conectividad móvil.",
+      "Integraciones documentales con Alfresco e interoperabilidad con RENIEC y otros servicios externos.",
+      "Mantenimiento evolutivo y continuidad operativa de más de 50 sistemas en producción.",
+    ],
+    technologies: ["Java", "Spring Boot", "Camunda 7", "Android", "Alfresco", "Oracle", "Redis"],
   },
   {
-    date: "Enero 2019 - febrero 2024",
-    title: "Consultor freelance",
-    company: "Digiflow by Estela",
+    date: "Octubre 2015 - Octubre 2017",
+    title: "Practicante Programador Junior",
+    company: "Solución",
     description:
-      "Atender requerimientos a los clientes que se encuentran involucrados con Facturación Electrónica, instalación del software Ubl 2.1, capacitaciones constantes conforme a las normativas de SUNAT, soporte TI.",
+      "Inicio profesional en desarrollo y soporte de aplicaciones empresariales.",
+    highlights: [
+      "Desarrollo con JSP, Servlets, patrón MVC, DAOs y consultas SQL.",
+      "Apoyo en mantenimiento de aplicaciones, soporte técnico, QA funcional y pruebas técnicas.",
+    ],
+    technologies: ["Java", "JSP", "Servlets", "MVC", "SQL"],
   },
 ]
 ---
 
-<ol class="relative mt-16">
+<ol class="relative mt-10 border-l border-slate-300 dark:border-slate-700">
   {
-    EXPERIENCE.map((experience) => (
-      <li class="">
+    experiences.map((experience) => (
+      <li>
         <ExperienceItem {...experience} />
       </li>
     ))

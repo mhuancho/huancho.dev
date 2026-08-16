@@ -3,14 +3,21 @@ import SunIcon from "./icons/Sun.astro"
 import MoonIcon from "./icons/Moon.astro"
 import SystemIcon from "./icons/System.astro"
 
-const THEMES = ["Light", "Dark", "System"]
+const THEMES = [
+  { label: "Claro", value: "light" },
+  { label: "Oscuro", value: "dark" },
+  { label: "Sistema", value: "system" },
+]
 ---
 
 <div class="relative ml-1 mr-1">
   <button
     transition:persist
     id="theme-toggle-btn"
-    class="appearance-none border-none flex hover:scale-125 transition"
+    type="button"
+    aria-haspopup="true"
+    aria-expanded="false"
+    class="flex appearance-none border-none p-1.5 transition hover:scale-110 focus-visible:rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
   >
     <span class="sr-only">Elige el tema</span>
     <SunIcon id="light" class="theme-toggle-icon size-5 transition-all" />
@@ -31,8 +38,14 @@ const THEMES = ["Light", "Dark", "System"]
     <ul>
       {
         THEMES.map((theme) => (
-          <li class="themes-menu-option px-2 py-1.5 cursor-default hover:bg-neutral-400/40 dark:hover:bg-gray-500/50 rounded-sm">
-            {theme}
+          <li>
+            <button
+              type="button"
+              data-theme={theme.value}
+              class="themes-menu-option w-full rounded-sm px-2 py-1.5 text-left hover:bg-neutral-400/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-gray-500/50"
+            >
+              {theme.label}
+            </button>
           </li>
         ))
       }
@@ -100,19 +113,32 @@ const THEMES = ["Light", "Dark", "System"]
 
   updateTheme()
 
-  document.addEventListener("click", () => themesMenu.classList.remove("open"))
+  const themeButton = document.getElementById("theme-toggle-btn")
+
+  const closeMenu = () => {
+    themesMenu.classList.remove("open")
+    themeButton.setAttribute("aria-expanded", "false")
+  }
+
+  document.addEventListener("click", closeMenu)
 
   document.getElementById("theme-toggle-btn").addEventListener("click", (e) => {
     e.stopPropagation()
     const isClosed = !themesMenu.classList.contains("open")
     themesMenu.classList[isClosed ? "add" : "remove"]("open")
+    themeButton.setAttribute("aria-expanded", String(isClosed))
   })
 
   document.querySelectorAll(".themes-menu-option").forEach((element) => {
     element.addEventListener("click", (e) => {
-      localStorage.setItem("theme", e.target.innerText.toLowerCase().trim())
+      localStorage.setItem("theme", e.currentTarget.dataset.theme)
       updateTheme()
+      closeMenu()
     })
+  })
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeMenu()
   })
 
   document.addEventListener('astro:after-swap', () => {

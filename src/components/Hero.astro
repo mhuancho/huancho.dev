@@ -1,47 +1,64 @@
 ---
-const personalImageAlt = "Miguel Ángel"
 import Badge from "@/components/Badge.astro"
 import LinkedInIcon from "@/components/icons/LinkedIn.astro"
 import MailIcon from "@/components/icons/Mail.astro"
 import SocialPill from "@/components/SocialPill.astro"
+
+const focusAreas = ["Java 21", "Spring Boot", "Quarkus", "Keycloak", "Camunda"]
 ---
 
-<div class="max-w-xl">
-  <div class="flex gap-4 mb-4">
-    <img
-      class="rounded-full shadow-lg size-16"
-      src="/mateo.webp"
-      alt={personalImageAlt}
-    />
-    <a
-      href="https://linkedin.com/in/mhuancho08"
-      target="_blank"
-      rel="noopener"
-      class="flex items-center transition md:justify-center md:hover:scale-105"
-    >
-      <Badge>Disponible para trabajar</Badge>
-    </a>
+<div class="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16">
+  <div class="max-w-3xl">
+    <div class="mb-6 flex flex-wrap items-center gap-3">
+      <img
+        class="size-14 rounded-2xl object-cover shadow-lg ring-1 ring-black/10 sm:size-16 lg:hidden"
+        src="/mateo.webp"
+        alt="Mateo Huancho Mariño"
+        width="64"
+        height="64"
+      />
+      <Badge>Disponible para nuevas oportunidades</Badge>
+    </div>
+    <p class="mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-blue-700 dark:text-blue-300">
+      Backend Java Senior Developer
+    </p>
+    <h1 class="text-4xl font-bold tracking-tight text-slate-950 sm:text-6xl dark:text-white">
+      Mateo Huancho Mariño
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-700 sm:text-xl dark:text-slate-300">
+      Más de 7 años diseñando, modernizando y estabilizando plataformas
+      empresariales con <strong class="font-semibold text-slate-950 dark:text-white">Java, microservicios, IAM y BPMN</strong>.
+      Enfoque en arquitectura mantenible, seguridad y evolución sostenible de
+      sistemas críticos.
+    </p>
+    <ul class="mt-7 flex flex-wrap gap-2" aria-label="Tecnologías principales">
+      {
+        focusAreas.map((technology) => (
+          <li class="rounded-full border border-slate-300/80 bg-white/70 px-3 py-1 text-sm font-medium text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-200">
+            {technology}
+          </li>
+        ))
+      }
+    </ul>
+    <nav class="mt-8 flex flex-wrap gap-3" aria-label="Enlaces de contacto">
+      <SocialPill href="mailto:mhuanchom@gmail.com">
+        <MailIcon class="size-4" />
+        Contactar
+      </SocialPill>
+      <SocialPill href="https://www.linkedin.com/in/mhuancho08" target="_blank">
+        <LinkedInIcon class="size-4" />
+        LinkedIn
+      </SocialPill>
+    </nav>
   </div>
-  <h1
-    class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white"
-  >
-    Hola, soy Mateo
-  </h1>
-  <p
-    class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300"
-  >
-    +6 años de experiencia. <strong
-      >Analista programador Fullstack</strong
-    > de Lima - Perú. Especializado en el desarrollo de aplicaciones web.
-  </p>
-  <nav class="flex flex-wrap gap-4 mt-8">
-    <SocialPill href="mailto:mhuanchom@gmail.com">
-      <MailIcon class="size-4" />
-      Contáctame
-    </SocialPill>
-    <SocialPill href="https://www.linkedin.com/in/mhuancho08" target="_blank">
-      <LinkedInIcon class="size-4" />
-      LinkedIn
-    </SocialPill>
-  </nav>
+  <div class="relative hidden lg:block">
+    <div class="absolute -inset-4 -z-10 rounded-[2rem] bg-gradient-to-br from-blue-500/20 via-cyan-400/10 to-emerald-400/20 blur-2xl"></div>
+    <img
+      src="/mateo.webp"
+      alt="Mateo Huancho Mariño"
+      width="288"
+      height="288"
+      class="aspect-square w-72 rotate-2 rounded-[2rem] object-cover shadow-2xl ring-1 ring-black/10 dark:ring-white/15"
+    />
+  </div>
 </div>
