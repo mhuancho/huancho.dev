@@ -3,32 +3,42 @@ const skillGroups = [
   {
     title: "Backend",
     description: "Servicios robustos, reactivos y orientados a dominio.",
-    skills: ["Java 8/11/17/21", "Spring Boot", "Spring Cloud", "WebFlux", "Quarkus", "Micronaut", "JPA / Hibernate", "MyBatis"],
+    skills: ["Java 8/11/17/21", "Spring Boot 3/4", "WebFlux", "R2DBC", "Quarkus 3", "Micronaut 4", "Panache", "Virtual Threads"],
   },
   {
     title: "Arquitectura e integración",
     description: "Límites claros, contratos explícitos y consistencia operativa.",
-    skills: ["Arquitectura hexagonal", "Clean Architecture", "DDD", "Microservicios", "OpenAPI", "GraphQL", "CQRS", "Outbox Pattern"],
+    skills: ["Arquitectura hexagonal", "Clean Architecture", "DDD", "Microservicios", "API Gateway", "Capa de experiencia (BFF)", "OpenAPI", "CQRS"],
   },
   {
-    title: "Seguridad y procesos",
-    description: "Identidad centralizada y automatización trazable.",
-    skills: ["Keycloak", "OAuth2 / OIDC", "JWT / JWKS", "MFA / TOTP", "RBAC", "Camunda 7/8", "BPMN / DMN", "N8N"],
+    title: "Seguridad e identidad",
+    description: "Identidad centralizada y acceso controlado por tenant.",
+    skills: ["Keycloak 26", "SPI Authenticator", "Themes FreeMarker", "OAuth2 / OIDC", "JWT / JWKS", "MFA / TOTP", "RBAC", "API Keys"],
   },
   {
     title: "Datos y mensajería",
     description: "Persistencia relacional, NoSQL e integración asíncrona.",
-    skills: ["PostgreSQL", "Oracle", "SQL Server", "MongoDB", "Redis", "SingleStore", "Kafka", "RabbitMQ"],
+    skills: ["PostgreSQL", "SQL Server", "Oracle", "MongoDB", "Redis", "Kafka", "RabbitMQ", "Spring Cloud Stream"],
+  },
+  {
+    title: "Resiliencia y observabilidad",
+    description: "Fallos aislados y sistemas que se pueden diagnosticar.",
+    skills: ["Resilience4j", "Circuit breaker", "Retry / Bulkhead", "Time limiter", "Micrometer", "Prometheus", "Health checks", "Trace ID"],
+  },
+  {
+    title: "Procesos y automatización",
+    description: "Orquestación de negocio y generación asistida de artefactos.",
+    skills: ["Camunda 7/8", "BPMN / DMN", "Workers", "Outbox Pattern", "N8N", "Spec Kit", "Agentes de IA", "PowerShell / Bash"],
   },
   {
     title: "Frontend y mobile",
     description: "Experiencia complementaria para plataformas desacopladas.",
-    skills: ["Angular 11-21", "RxJS", "Native Federation", "Signals", "Tailwind CSS", "React", "TypeScript", "Android"],
+    skills: ["Angular 11-21", "Nx monorepo", "Native Federation", "Signals", "RxJS", "SSR", "Tailwind CSS", "Android"],
   },
   {
-    title: "Calidad y operación",
-    description: "Código verificable, observable y preparado para evolucionar.",
-    skills: ["JUnit 5", "Mockito", "JaCoCo", "SonarQube", "Docker", "Kubernetes", "Jenkins", "GitLab CI/CD"],
+    title: "Calidad, cloud y operación",
+    description: "Código verificable, desplegable y preparado para evolucionar.",
+    skills: ["JUnit 5", "Mockito", "JaCoCo", "SonarQube", "Docker", "Kubernetes", "AWS S3 / SES", "GitLab CI/CD"],
   },
 ]
 ---

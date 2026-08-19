@@ -16,17 +16,88 @@ interface Project {
 
 const projects: Project[] = [
   {
-    eyebrow: "Seguridad e identidad",
-    title: "IAM y autenticación multifactor",
+    eyebrow: "Gateways y resiliencia",
+    title: "Capa de seguridad de una plataforma PSE",
     description:
-      "Solución multi-cliente para centralizar autenticación, autorización y administración de usuarios en una plataforma empresarial.",
+      "Puerta de entrada multi-tenant de una plataforma de facturación electrónica: resuelve el destino de cada solicitud por RUC y aísla los fallos de los sistemas downstream.",
     highlights: [
-      "SPI personalizados, validación corporativa y aprovisionamiento Just-In-Time.",
-      "MFA TOTP/OTP, JWT estandarizados, roles, grupos y auditoría.",
+      "Carga multipart en streaming a disco temporal, sin bufferizar archivos en memoria.",
+      "API Key por RUC, enrutamiento cacheado y gateways reactivos con Spring Cloud Gateway y R2DBC.",
+      "Librería propia de circuit breaker, retry, bulkhead y time limiter sobre Resilience4j.",
     ],
-    tags: ["Java 17", "Spring Boot 3", "Keycloak 26", "OAuth2 / OIDC", "PostgreSQL"],
+    tags: ["Java 21", "Quarkus 3", "Spring Boot 4", "Resilience4j", "Virtual Threads"],
+    shortCode: "PSE",
+    accent: "from-rose-500 via-pink-600 to-fuchsia-700",
+  },
+  {
+    eyebrow: "Mensajería asíncrona",
+    title: "Procesamiento de comprobantes por lotes",
+    description:
+      "Productor y worker que sacan el procesamiento de paquetes masivos fuera del camino síncrono de subida, con garantías de idempotencia y reintento.",
+    highlights: [
+      "Spring Cloud Stream sobre RabbitMQ, con el paquete persistido en S3 y el evento en cola.",
+      "Bloques de 1000 comprobantes con republicación del evento restante para evitar timeouts.",
+      "Trazabilidad e idempotencia en PostgreSQL: los fallidos se reintentan sin reprocesar lo confirmado.",
+    ],
+    tags: ["Spring Boot 4.1", "RabbitMQ", "AWS S3", "PostgreSQL", "Virtual Threads"],
+    shortCode: "BATCH",
+    accent: "from-violet-600 via-indigo-600 to-blue-600",
+  },
+  {
+    eyebrow: "Seguridad e identidad",
+    title: "IAM, SPI de Keycloak y temas corporativos",
+    description:
+      "Extensión de Keycloak para un modelo de acceso por empresa: login con RUC, alta de usuarios secundarios y experiencia de acceso propia por cliente.",
+    highlights: [
+      "SPI Authenticator con login RUC + usuario y provisioning Just-In-Time desde base legacy.",
+      "SPI FormAction de preregistro de usuarios secundarios con validación de empresa y duplicados.",
+      "Dos temas FreeMarker con MFA TOTP/OTP, 9 idiomas y branding dinámico resuelto por dominio.",
+    ],
+    tags: ["Keycloak 26", "SPI / FreeMarker", "Quarkus 3", "OAuth2 / OIDC", "MFA"],
     shortCode: "IAM",
     accent: "from-emerald-500 via-teal-500 to-cyan-600",
+  },
+  {
+    eyebrow: "Micro-Frontends",
+    title: "Plataforma MFE con Nx y Native Federation",
+    description:
+      "Monorepo con un host shell y remotos federados por dominio: documentos, trazabilidad, analítica, facturación, IAM, tenant, reportes y compras.",
+    highlights: [
+      "Contrato de navegación: cada remoto expone getNavItems() y el shell fusiona, deduplica y filtra por entitlements.",
+      "Componentes standalone con signals y OnPush, TypeScript estricto y librerías compartidas.",
+      "CSS compilado por remoto sobre una base Tailwind común, sin dependencia de estilos del shell.",
+    ],
+    tags: ["Nx 22", "Angular 21", "Native Federation", "Signals", "Tailwind 4"],
+    shortCode: "MFE",
+    accent: "from-orange-500 via-rose-500 to-pink-600",
+  },
+  {
+    eyebrow: "Ecosistema de servicios",
+    title: "Onboarding, correo y documentos electrónicos",
+    description:
+      "Conjunto de servicios de dominio que comparten contrato técnico: onboarding empresarial, correo corporativo, registro de compras y generación documental.",
+    highlights: [
+      "Onboarding con documentos en S3, contratos, tareas y jobs programados de seguimiento.",
+      "Registro de compras electrónico reactivo con WebFlux, R2DBC y routers funcionales.",
+      "Filestore con JasperReports, iText 7, PDFBox y ZXing para reportes, PDFs y códigos QR.",
+    ],
+    tags: ["Quarkus 3", "Spring Boot 4", "R2DBC", "AWS S3 / SES", "JasperReports"],
+    shortCode: "CORE",
+    accent: "from-cyan-500 via-sky-600 to-blue-700",
+  },
+  {
+    eyebrow: "Agentes de IA",
+    title: "model-farm · scaffold Spec Kit",
+    description:
+      "Agente de especificación que deriva la identidad de un proyecto desde su ruta y su contrato OpenAPI, en lugar de quedar atado a un API concreto.",
+    highlights: [
+      "Ciclo specify → plan → tasks → implement con scripts equivalentes en PowerShell y Bash.",
+      "Clasifica la solicitud: proyecto nuevo, nuevo con OpenAPI predefinido o cambio sobre existente.",
+      "Historial versionado de artefactos y changelog generado desde las notas de cambio.",
+    ],
+    tags: ["Spec Kit", "OpenAPI", "PowerShell", "Bash", "Automatización"],
+    shortCode: "IA",
+    accent: "from-slate-700 via-slate-800 to-slate-950",
   },
   {
     eyebrow: "Arquitectura y eventos",
@@ -39,7 +110,7 @@ const projects: Project[] = [
     ],
     tags: ["Java 21", "Micronaut 4", "Kafka", "PostgreSQL", "GraalVM"],
     shortCode: "EVT",
-    accent: "from-violet-600 via-indigo-600 to-blue-600",
+    accent: "from-lime-500 via-emerald-600 to-teal-700",
   },
   {
     eyebrow: "Comercio exterior",
