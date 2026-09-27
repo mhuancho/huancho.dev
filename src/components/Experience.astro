@@ -1,58 +1,8 @@
 ---
 import ExperienceItem from "./ExperienceItem.astro"
+import profile from "@/data/profile.json"
 
-const experiences = [
-  {
-    date: "Mayo 2024 - Actualidad",
-    title: "Backend Java Senior Developer",
-    company: "Complexless",
-    description:
-      "Diseño y desarrollo de soluciones para una plataforma FACTUS PSE de facturación electrónica de alto volumen, con foco en backend, seguridad, resiliencia, estandarización técnica y arquitecturas multi-tenant.",
-    highlights: [
-      "Capa de seguridad y enrutamiento por RUC con Quarkus y Spring Cloud Gateway: carga multipart en streaming, API Keys y gateways reactivos con R2DBC.",
-      "Librerías corporativas propias de resiliencia con Resilience4j y de contratos compartidos (respuesta tipada, paginación, contexto multi-tenant) reutilizadas por servicios Quarkus y Spring Boot.",
-      "Procesamiento asíncrono de comprobantes por lotes con Spring Cloud Stream, RabbitMQ y S3, con idempotencia, reintentos y procesamiento por bloques.",
-      "IAM sobre Keycloak 26: SPI Authenticator y FormAction, provisioning Just-In-Time, MFA TOTP/OTP y temas corporativos con branding por dominio.",
-      "Plataformas Micro-Frontend en monorepos Nx con Angular 21, Native Federation y navegación dinámica filtrada por entitlements.",
-      "Integración de procesos con Kafka, Outbox Pattern, Camunda 7/8 y Redis; evolución de VUCE 2.0 y procesos portuarios con pruebas, SonarQube y trazabilidad.",
-    ],
-    technologies: [
-      "Java 21",
-      "Quarkus 3",
-      "Spring Boot 4",
-      "Keycloak 26",
-      "RabbitMQ",
-      "Resilience4j",
-      "Angular 21 / Nx",
-    ],
-  },
-  {
-    date: "Octubre 2018 - Abril 2024",
-    title: "Java Developer",
-    company: "Sagone - Techera",
-    description:
-      "Desarrollo, evolución e integración de soluciones empresariales para sectores regulados y organizaciones con operación continua.",
-    highlights: [
-      "Automatización de procesos regulatorios del Sistema de Transmisión Eléctrica de OSINERGMIN con Java, Spring Boot, Camunda 7 y Redis.",
-      "Desarrollo y mantenimiento de FACILITO para Android, integrando APIs REST, geolocalización y escenarios de conectividad móvil.",
-      "Integraciones documentales con Alfresco e interoperabilidad con RENIEC y otros servicios externos.",
-      "Mantenimiento evolutivo y continuidad operativa de más de 50 sistemas en producción.",
-    ],
-    technologies: ["Java", "Spring Boot", "Camunda 7", "Android", "Alfresco", "Oracle", "Redis"],
-  },
-  {
-    date: "Octubre 2015 - Octubre 2017",
-    title: "Practicante Programador Junior",
-    company: "Solución",
-    description:
-      "Inicio profesional en desarrollo y soporte de aplicaciones empresariales.",
-    highlights: [
-      "Desarrollo con JSP, Servlets, patrón MVC, DAOs y consultas SQL.",
-      "Apoyo en mantenimiento de aplicaciones, soporte técnico, QA funcional y pruebas técnicas.",
-    ],
-    technologies: ["Java", "JSP", "Servlets", "MVC", "SQL"],
-  },
-]
+const experiences = profile.experience
 ---
 
 <ol class="relative mt-10 border-l border-slate-300 dark:border-slate-700">

@@ -1,0 +1,45 @@
+CV descargables desde la web
+============================
+
+Mateo-Huancho-CV-ES.pdf   <- lo descargan los botones "CV (ES)" / "CV" del sitio (6 paginas)
+Mateo-Huancho-CV-EN.pdf   <- lo descarga el boton "CV (EN)" (5 paginas)
+Mateo-Huancho-CV-ES.docx  <- version Word editable (no enlazada desde el sitio)
+Mateo-Huancho-CV-EN.docx  <- idem en ingles
+
+Que contienen
+-------------
+El CV COMPLETO: todo lo que ya estaba en el CV anterior (los 13 proyectos) MAS los 6
+proyectos que la auditoria de repositorios encontro que faltaban (capa de seguridad e
+ingesta, gateways BFF, resiliencia, procesamiento asincrono, servicios de dominio y
+micro-frontends). 19 proyectos en total. No se elimino nada del CV original.
+
+Los PDF son la version PUBLICA: texto seleccionable (los ATS lo leen), sin ningun
+marcador [METRICA] / [CONFIRMAR].
+Los .docx son la version de TRABAJO: llevan esos marcadores resaltados en amarillo
+(11 en ES, 12 en EN) para que sepas que falta por rellenar.
+
+Version corta
+-------------
+Si un portal limita la extension, hay una version condensada de 2 paginas en
+D:\tmp\cv-audit\CV-Mateo-Huancho-{ES,EN}-2paginas.{docx,pdf}. No esta publicada aqui.
+
+Como regenerarlos
+-----------------
+El contenido vive en un unico sitio: D:\tmp\cv-audit\tools\cv_content.py
+  ES_COMPLETO / EN_COMPLETO -> los de esta carpeta
+  ES_CORTO / EN_CORTO       -> la version de 2 paginas
+Edita ahi y vuelve a ejecutar:
+
+    python D:\tmp\cv-audit\tools\gen_cv_docx.py    (Word, en D:\tmp\cv-audit)
+    python D:\tmp\cv-audit\tools\gen_cv_pdf.py     (PDF, directamente en esta carpeta)
+    copy D:\tmp\cv-audit\CV-Mateo-Huancho-ES.docx  Mateo-Huancho-CV-ES.docx
+    copy D:\tmp\cv-audit\CV-Mateo-Huancho-EN.docx  Mateo-Huancho-CV-EN.docx
+
+El PDF se imprime con Chrome/Edge en modo headless; no hace falta instalar nada.
+Para quitar un hueco pendiente, borra el marcador o el tramo <<...>> que lo envuelve:
+lo que va entre << >> solo aparece en el Word, nunca en el PDF publico.
+
+Rutas en el sitio
+-----------------
+Los enlaces estan en src/data/profile.json -> meta.links.cvEs / meta.links.cvEn.
+Si renombras los archivos, cambia solo ese JSON; ningun componente tiene la ruta escrita.

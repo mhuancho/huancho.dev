@@ -1,0 +1,140 @@
+[
+  {
+    "slug": "identidad-multiempresa",
+    "eyebrow": "Seguridad e identidad",
+    "title": "Identidad multiempresa sobre un proveedor de identidad extendido",
+    "summary": "Cómo dar acceso a usuarios de muchas empresas distintas, con identidades que no son únicas globalmente y una base de usuarios heredada que no podía cambiar de contraseña.",
+    "context": "Plataforma de facturación electrónica usada por muchas empresas distintas. Cada empresa tiene sus propios usuarios, sus propios productos contratados y su propia identidad visual. Había además una base de usuarios heredada de la plataforma anterior.",
+    "problem": [
+      "El identificador de un usuario no es único globalmente: el mismo nombre de usuario puede existir en dos empresas distintas, así que el login necesita el identificador fiscal de la empresa como parte de la identidad.",
+      "Los usuarios heredados tenían contraseñas guardadas con hashes antiguos, con capas adicionales de codificación. Pedir a todos un reset era inaceptable para el negocio.",
+      "Cada empresa esperaba ver su logo y su aviso de privacidad en la pantalla de acceso."
+    ],
+    "role": "Autor de las dos librerías de extensión y del repositorio de temas; único contribuyente en tres de las cuatro piezas.",
+    "solution": [
+      "Un Authenticator SPI compone la identidad interna a partir de empresa + usuario y valida el identificador fiscal (formato y pertenencia).",
+      "Si el usuario todavía no existe en el proveedor de identidad, un verificador propio comprueba la credencial heredada con comparación en tiempo constante y, si es válida, lo aprovisiona en ese mismo login con sus roles y grupos derivados de los productos contratados.",
+      "La migración del resto de la empresa se lanza en hilos virtuales fuera del hilo de petición, para no penalizar el tiempo de login.",
+      "Un FormAction SPI añade el preregistro de usuarios secundarios con validación de empresa y de duplicados.",
+      "Un EmailSenderProvider SPI hace que los correos del proveedor de identidad salgan por el servicio de correo de la plataforma: una sola plantilla, un solo remitente, un solo log.",
+      "Dos temas de login en FreeMarker resuelven el logo por dominio, con enrolamiento TOTP por QR y modo manual, selección entre varios dispositivos OTP, 9 idiomas y atributos de accesibilidad."
+    ],
+    "decisions": [
+      { "title": "Extender el proveedor de identidad en vez de construir autenticación propia", "detail": "Se hereda gestión de sesiones, tokens, MFA y consentimiento. El coste es quedar atado al ciclo de vida de sus SPI: cada actualización mayor obliga a revisar interfaces." },
+      { "title": "Migración perezosa al primer login, no masiva", "detail": "Nadie pierde el acceso y no hay ventana de mantenimiento; a cambio hay que mantener el camino heredado durante toda la transición y decidir cuándo apagarlo." },
+      { "title": "Comparación en tiempo constante aunque el hash sea antiguo", "detail": "El algoritmo heredado es débil por definición, pero eso no justifica filtrar información por el tiempo de respuesta." },
+      { "title": "Delegar el correo del proveedor de identidad a un servicio propio", "detail": "Unifica plantillas y trazabilidad, pero convierte al servicio de correo en dependencia del flujo de recuperación de contraseña." }
+    ],
+    "stack": ["Java 21", "Keycloak SPI", "FreeMarker", "JDBC multi-motor", "Virtual Threads", "OAuth2 / OIDC / JWT"],
+    "result": "El acceso de todas las empresas pasa por una sola pieza extensible y los usuarios heredados entraron sin cambiar su contraseña.",
+    "nextTime": "Cubrir las extensiones con tests de integración sobre un proveedor de identidad real en contenedor, en lugar de solo pruebas unitarias; y definir desde el principio la fecha de apagado del camino heredado, con una métrica que cuente cuántos logins siguen usándolo."
+  },
+  {
+    "slug": "resiliencia",
+    "eyebrow": "Resiliencia",
+    "title": "Resiliencia como librería y como servicio",
+    "summary": "Una librería con una sola operación pública y un gateway dedicado para que la degradación de un sistema heredado no tumbe lo que no tiene nada que ver.",
+    "context": "La plataforma nueva convive con sistemas heredados que atienden operaciones críticas y cuya latencia y disponibilidad no se controlan.",
+    "problem": [
+      "Cuando uno de esos sistemas se degradaba, el fallo se propagaba: los hilos de los servicios llamantes se quedaban esperando y las colas de peticiones crecían.",
+      "Cada servicio resolvía el problema a su manera, o no lo resolvía."
+    ],
+    "role": "Autor único de la librería y del gateway.",
+    "solution": [
+      "Una librería con una sola operación pública: execute(instancia, llamada). Por dentro compone, en este orden, retry → time limiter → circuit breaker → bulkhead.",
+      "Publica métricas etiquetadas por instancia, ejecuta en hilos virtuales y traduce los fallos a excepciones propias desenvolviendo los wrappers de ejecución asíncrona.",
+      "La política es un record que valida su propia configuración al construirse: una configuración incoherente falla al arrancar, no en producción.",
+      "Un gateway dedicado para el tráfico hacia los sistemas heredados: rutas declaradas por configuración, un circuit breaker por combinación de sistema y operación, dos perfiles de política (normal de 3 s y de larga duración de 30 s) y fallback HTTP con Retry-After."
+    ],
+    "decisions": [
+      { "title": "El orden de composición importa", "detail": "Retry dentro del time limiter, y ambos dentro del circuit breaker: así los reintentos cuentan dentro del presupuesto de tiempo y el breaker ve el resultado final, no cada intento." },
+      { "title": "Un HTTP 429 no es un fallo, es backpressure", "detail": "Contarlo como error abre el circuito precisamente cuando el sistema remoto está pidiendo que bajes el ritmo. Se excluye del cómputo de fallos, pero no del retry." },
+      { "title": "Gateway dedicado en vez de breakers en cada consumidor", "detail": "Añade un salto de red, pero centraliza la política, hace observable el estado de cada dependencia en un solo panel y permite cambiar umbrales sin desplegar los servicios de negocio." },
+      { "title": "Bulkhead con semáforo, no con pool de hilos", "detail": "Con hilos virtuales el coste de un hilo ya no es el recurso escaso; lo que hay que limitar es la concurrencia contra el sistema remoto." }
+    ],
+    "stack": ["Java 21", "Virtual Threads", "Resilience4j", "Spring Cloud Gateway", "Spring Boot 4", "Micrometer / Prometheus"],
+    "result": "Siete dependencias heredadas aisladas con política explícita, y tests de integración que verifican el comportamiento con el upstream caído.",
+    "nextTime": "Exponer la política como configuración recargable en caliente y añadir ajuste automático de concurrencia según la latencia observada, en lugar de un tope fijo."
+  },
+  {
+    "slug": "procesamiento-asincrono",
+    "eyebrow": "Mensajería asíncrona",
+    "title": "Procesamiento masivo de documentos con garantías",
+    "summary": "Sacar del camino síncrono la carga de paquetes con miles de documentos, sin duplicar registros cuando el cliente reintenta.",
+    "context": "Los clientes suben paquetes con miles de documentos electrónicos. El camino original era síncrono: subir, descomprimir, validar y registrar todo dentro de la misma petición HTTP.",
+    "problem": [
+      "Los paquetes grandes agotaban el timeout de la petición.",
+      "El proceso consumía memoria proporcional al tamaño del archivo.",
+      "Un reintento del cliente reprocesaba todo desde cero y duplicaba registros."
+    ],
+    "role": "Creador de las dos piezas (productor y worker) y autor del 94 % del worker.",
+    "solution": [
+      "El productor guarda el paquete en almacenamiento de objetos en streaming hacia un fichero temporal con permisos restringidos, y publica en la cola solo el evento. La respuesta al cliente es inmediata.",
+      "El worker procesa por bloques acotados y, si el paquete tiene más, republica el evento con el resto: ningún mensaje individual tarda lo bastante como para agotar el ack.",
+      "Cada documento se registra en una tabla de idempotencia antes de confirmarse, así un reintento no duplica lo ya confirmado y sí reintenta lo que falló.",
+      "La cola tiene DLQ vinculada automáticamente con republicación, tres intentos, concurrencia acotada y prefetch 1 para que un consumidor lento no acapare mensajes.",
+      "Una segunda función consume la DLQ y un planificador de reencolado técnico recupera los casos que quedaron en un estado intermedio."
+    ],
+    "decisions": [
+      { "title": "El payload va al almacenamiento de objetos, no al mensaje", "detail": "Mantiene los mensajes pequeños y el broker sano; a cambio hay que gestionar el ciclo de vida de los objetos y su limpieza." },
+      { "title": "Bloques con republicación en vez de un mensaje gigante", "detail": "Cada unidad de trabajo cabe en un tiempo predecible; el precio es más mensajes y un contador de progreso que mantener." },
+      { "title": "Idempotencia en base de datos en vez de confiar en exactly-once del broker", "detail": "Ningún broker da exactly-once de extremo a extremo; la única garantía real es que el consumidor sea idempotente." },
+      { "title": "prefetch 1 aunque baje el rendimiento máximo", "detail": "Con mensajes de duración muy variable, un prefetch alto reparte mal el trabajo y alarga la cola de los lentos." }
+    ],
+    "stack": ["Spring Boot 4.1", "Spring Cloud Stream", "RabbitMQ", "AWS S3", "PostgreSQL", "Virtual Threads"],
+    "result": "La subida responde de inmediato y el procesamiento se reintenta sin duplicar lo ya confirmado.",
+    "nextTime": "Publicar el progreso del paquete como eventos de dominio para que el frontend muestre avance real en vez de consultar estado; y medir la latencia por bloque con un histograma, no solo con contadores."
+  },
+  {
+    "slug": "capa-de-experiencia",
+    "eyebrow": "Capa de experiencia",
+    "title": "Capa de experiencia multi-tenant sin estado en el edge",
+    "summary": "Un gateway por canal en vez de uno para todos, con el destino de cada petición resuelto por HTTP y cacheado sin provocar avalanchas.",
+    "context": "Varios canales consumen la misma plataforma: portal interno, canal público e integradores externos. Cada uno con su CORS, sus timeouts, su superficie expuesta y su forma de autenticarse.",
+    "problem": [
+      "Un único gateway para todos obligaba a mezclar políticas contradictorias: un CORS permisivo para el portal acaba siendo permisivo para todos.",
+      "El destino de cada petición depende de la empresa que la hace, información que vive en el servicio de configuración."
+    ],
+    "role": "Creador de los tres gateways de experiencia.",
+    "solution": [
+      "Un gateway por audiencia, no uno para todas: cada uno declara sus rutas, su CORS, sus timeouts y su pool de conexiones con métricas.",
+      "Filtros globales propios: propagación de la cabecera de trazabilidad, resolución del destino downstream según la empresa y cabecera de contexto para los servicios de dominio.",
+      "El edge no abre base de datos: pregunta por HTTP al servicio de configuración.",
+      "La resolución tiene caché con TTL, tamaño máximo con desalojo de entradas vencidas y una sola consulta en vuelo por empresa, así una entrada que caduca en hora punta no dispara mil consultas idénticas."
+    ],
+    "decisions": [
+      { "title": "Gateway por canal en vez de uno solo", "detail": "Más despliegues y más configuración, a cambio de que un cambio en el canal público no pueda abrir accidentalmente el interno." },
+      { "title": "Consultar la configuración por HTTP en lugar de compartir la base de datos", "detail": "El gateway queda sin estado y escala horizontalmente sin conexiones a BD; el precio es una dependencia en caliente, mitigada con caché, timeouts y consulta única en vuelo." },
+      { "title": "Rutas por configuración en vez de por código", "detail": "Añadir un destino no requiere recompilar; a cambio, la configuración crece y necesita revisión como si fuera código." }
+    ],
+    "stack": ["Spring Boot 4", "Spring Cloud Gateway", "WebClient reactivo", "OAuth2 Resource Server", "Micrometer / Prometheus"],
+    "result": "Tres canales con políticas independientes y un edge sin estado, escalable horizontalmente.",
+    "nextTime": "Extraer los tres gateways a una base común con los filtros compartidos como librería, en lugar de tenerlos replicados; y añadir rate limiting por empresa en el canal externo."
+  },
+  {
+    "slug": "micro-frontends",
+    "eyebrow": "Micro-frontends",
+    "title": "Micro-frontends federados con contrato de navegación",
+    "summary": "Que ocho módulos desarrollados por varias personas se presenten como una sola aplicación, sin un menú central que todos tengan que editar.",
+    "context": "Una plataforma con módulos muy distintos (documentos, analítica, facturación, identidad, administración, reportes, configuración, compras) desarrollados por varias personas, que debe presentarse al usuario como una sola aplicación.",
+    "problem": [
+      "Un frontend monolítico convertía cada cambio pequeño en un despliegue completo.",
+      "El menú de navegación era un archivo que todo el mundo tenía que editar: una fuente constante de conflictos."
+    ],
+    "role": "Contribuyente principal de dos remotos completos y de la librería compartida de contexto de autenticación; el monorepo lo arrancó otra persona del equipo.",
+    "solution": [
+      "Cada remoto expone una función getNavItems() con los ítems de menú que aporta. El shell los fusiona, deduplica y filtra por los entitlements del usuario, calculados a partir del token.",
+      "El contexto de autenticación vive en una librería compartida con estado reactivo (signals) y expone consultas del tipo «¿tiene este permiso?», en lugar de que cada remoto interprete los claims por su cuenta.",
+      "Las dependencias se comparten como singleton con versión estricta, para que dos remotos no carguen dos copias del framework.",
+      "Cada remoto compila su propio CSS sobre una base de utilidades común, sin depender de que el shell cargue sus estilos."
+    ],
+    "decisions": [
+      { "title": "Contrato de navegación en lugar de configuración central", "detail": "Cada equipo es dueño de su menú; el coste es que el orden del menú deja de ser trivial y hay que definir prioridades." },
+      { "title": "Compartir dependencias como singleton con versión estricta", "detail": "Evita duplicar el framework en el bundle, pero obliga a subir versiones de forma coordinada en todo el monorepo." },
+      { "title": "Monorepo en vez de repositorios separados", "detail": "Los refactors que atraviesan varios remotos son posibles en un solo cambio; a cambio, el repositorio crece y necesita disciplina de límites." }
+    ],
+    "stack": ["Angular 21", "Signals", "Nx", "Native Federation", "TypeScript estricto", "Tailwind CSS", "keycloak-js"],
+    "result": "Diez remotos desplegables de forma independiente, con el menú y el control de acceso derivados del token.",
+    "nextTime": "Publicar el contrato de navegación como un tipo compartido versionado y validado en compilación, y añadir pruebas end-to-end que carguen el shell con los remotos reales para detectar roturas de contrato antes de desplegar."
+  }
+]

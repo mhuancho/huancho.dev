@@ -1,0 +1,136 @@
+[
+  {
+    "eyebrow": "Gateways y resiliencia",
+    "title": "Capa de seguridad de una plataforma de facturación electrónica",
+    "description": "Puerta de entrada multiempresa: resuelve el destino de cada solicitud según la empresa y aísla los fallos de los sistemas heredados.",
+    "highlights": [
+      "Carga multipart en streaming a disco temporal, sin bufferizar archivos en memoria.",
+      "API key por empresa, enrutamiento cacheado y gateways reactivos con Spring Cloud Gateway y R2DBC.",
+      "Librería propia de circuit breaker, retry, bulkhead y time limiter sobre Resilience4j."
+    ],
+    "tags": ["Java 21", "Quarkus 3", "Spring Boot 4", "Resilience4j", "Virtual Threads"],
+    "shortCode": "GATEWAY",
+    "accent": "from-rose-500 via-pink-600 to-fuchsia-700",
+    "caseStudy": "resiliencia"
+  },
+  {
+    "eyebrow": "Mensajería asíncrona",
+    "title": "Procesamiento de documentos por lotes",
+    "description": "Productor y worker que sacan el procesamiento de paquetes masivos fuera del camino síncrono de subida, con garantías de idempotencia y reintento.",
+    "highlights": [
+      "Spring Cloud Stream sobre RabbitMQ, con el paquete persistido en almacenamiento de objetos y solo el evento en la cola.",
+      "Bloques de 1.000 documentos con republicación del resto para evitar timeouts.",
+      "Trazabilidad e idempotencia en PostgreSQL: los fallidos se reintentan sin reprocesar lo confirmado."
+    ],
+    "tags": ["Spring Boot 4.1", "RabbitMQ", "AWS S3", "PostgreSQL", "Virtual Threads"],
+    "shortCode": "BATCH",
+    "accent": "from-violet-600 via-indigo-600 to-blue-600",
+    "caseStudy": "procesamiento-asincrono"
+  },
+  {
+    "eyebrow": "Seguridad e identidad",
+    "title": "IAM, extensiones SPI de Keycloak y temas corporativos",
+    "description": "Extensión del proveedor de identidad para un modelo de acceso por empresa: login con identificador fiscal, alta de usuarios secundarios y experiencia de acceso propia por cliente.",
+    "highlights": [
+      "SPI Authenticator con login por empresa y provisioning Just-In-Time desde la base heredada.",
+      "SPI FormAction de preregistro de usuarios secundarios con validación de empresa y duplicados.",
+      "Dos temas FreeMarker con MFA TOTP/OTP, 9 idiomas y branding dinámico resuelto por dominio."
+    ],
+    "tags": ["Keycloak 26", "SPI / FreeMarker", "Quarkus 3", "OAuth2 / OIDC", "MFA"],
+    "shortCode": "IAM",
+    "accent": "from-emerald-500 via-teal-500 to-cyan-600",
+    "caseStudy": "identidad-multiempresa"
+  },
+  {
+    "eyebrow": "Micro-frontends",
+    "title": "Plataforma MFE con Nx y Native Federation",
+    "description": "Monorepo con un host shell y remotos federados por dominio: documentos, trazabilidad, analítica, facturación, identidad, administración, reportes y compras.",
+    "highlights": [
+      "Contrato de navegación: cada remoto expone getNavItems() y el shell fusiona, deduplica y filtra por entitlements.",
+      "Componentes standalone con signals y OnPush, TypeScript estricto y librerías compartidas.",
+      "CSS compilado por remoto sobre una base Tailwind común, sin depender de estilos del shell."
+    ],
+    "tags": ["Nx 22", "Angular 21", "Native Federation", "Signals", "Tailwind 4"],
+    "shortCode": "MFE",
+    "accent": "from-orange-500 via-rose-500 to-pink-600",
+    "caseStudy": "micro-frontends"
+  },
+  {
+    "eyebrow": "Ecosistema de servicios",
+    "title": "Onboarding, correo y documentos electrónicos",
+    "description": "Conjunto de servicios de dominio que comparten contrato técnico: onboarding empresarial, correo corporativo, registro de compras y generación documental.",
+    "highlights": [
+      "Onboarding con documentos en almacenamiento de objetos, contratos, tareas y jobs programados de seguimiento.",
+      "Registro de compras electrónico reactivo con WebFlux, R2DBC y routers funcionales.",
+      "Generación documental con reportes, PDF y códigos QR."
+    ],
+    "tags": ["Quarkus 3", "Spring Boot 4", "R2DBC", "AWS S3 / SES", "JasperReports"],
+    "shortCode": "CORE",
+    "accent": "from-cyan-500 via-sky-600 to-blue-700"
+  },
+  {
+    "eyebrow": "Capa de experiencia",
+    "title": "Gateways BFF multi-tenant sin estado",
+    "description": "Un gateway por canal (portal interno, público e integradores externos), cada uno con su CORS, sus timeouts y su superficie expuesta.",
+    "highlights": [
+      "Resolución de empresa con caché TTL acotada y una sola consulta en vuelo, sin base de datos en el edge.",
+      "Filtros globales de trazabilidad, enrutamiento downstream y cabeceras de contexto.",
+      "Pools y timeouts afinados con métricas, shutdown graceful y actuator restringido."
+    ],
+    "tags": ["Spring Cloud Gateway", "WebFlux", "OAuth2", "Micrometer", "Prometheus"],
+    "shortCode": "BFF",
+    "accent": "from-teal-600 via-cyan-600 to-sky-700",
+    "caseStudy": "capa-de-experiencia"
+  },
+  {
+    "eyebrow": "Agentes de IA",
+    "title": "model-farm · scaffold Spec Kit",
+    "description": "Agente de especificación que deriva la identidad de un proyecto desde su ruta y su contrato OpenAPI, en lugar de quedar atado a un API concreto.",
+    "highlights": [
+      "Ciclo specify → plan → tasks → implement con scripts equivalentes en PowerShell y Bash.",
+      "Clasifica la solicitud: proyecto nuevo, nuevo con OpenAPI predefinido o cambio sobre existente.",
+      "Historial versionado de artefactos y changelog generado desde las notas de cambio."
+    ],
+    "tags": ["Spec Kit", "OpenAPI", "PowerShell", "Bash", "Automatización"],
+    "shortCode": "IA",
+    "accent": "from-slate-700 via-slate-800 to-slate-950"
+  },
+  {
+    "eyebrow": "Arquitectura y eventos",
+    "title": "Plataforma transaccional event-driven",
+    "description": "Backend para procesos comerciales con control de stock, consistencia transaccional, auditoría y publicación confiable de eventos.",
+    "highlights": [
+      "Outbox Pattern con reintentos y control de estados operativos.",
+      "Seguridad JWT/JWKS, Flyway, HikariCP y preparación Native Image."
+    ],
+    "tags": ["Java 21", "Micronaut 4", "Kafka", "PostgreSQL", "GraalVM"],
+    "shortCode": "EVT",
+    "accent": "from-lime-500 via-emerald-600 to-teal-700"
+  },
+  {
+    "eyebrow": "Comercio exterior",
+    "title": "VUCE 2.0",
+    "description": "Microservicios y procesos portuarios para trámites, trazabilidad documental e integración entre actores de comercio exterior.",
+    "highlights": [
+      "APIs contract-first, arquitectura hexagonal y capa de experiencia.",
+      "Firma digital, reportes JasperReports, Redis, Kafka, Feign y Camunda BPM."
+    ],
+    "tags": ["Java 17", "Spring Boot 3", "Quarkus", "Angular 17", "Camunda"],
+    "shortCode": "VUCE",
+    "accent": "from-sky-500 via-blue-600 to-indigo-700",
+    "image": "/projects/vuce20.webp"
+  },
+  {
+    "eyebrow": "Sector regulado",
+    "title": "STE - OSINERGMIN",
+    "description": "Automatización de procesos técnicos y económicos del Sistema de Transmisión Eléctrica con trazabilidad y ejecución controlada.",
+    "highlights": [
+      "Procesos BPMN para planificación, valorización y control regulatorio.",
+      "Reglas de negocio, cálculos regulatorios y optimización con Redis."
+    ],
+    "tags": ["Java", "Spring Boot", "Quarkus", "Camunda 7", "Redis"],
+    "shortCode": "STE",
+    "accent": "from-amber-500 via-orange-500 to-red-600",
+    "image": "/projects/ste.webp"
+  }
+]

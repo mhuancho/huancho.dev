@@ -3,33 +3,98 @@ import "@fontsource-variable/onest"
 
 import Footer from "../components/Footer.astro"
 import Header from "../components/Header.astro"
-import { ViewTransitions } from "astro:transitions"
+import profile from "@/data/profile.json"
+// Astro 5 renombro ViewTransitions -> ClientRouter; en Astro 7 (instalado aqui)
+// ViewTransitions ya no existe.
+import { ClientRouter } from "astro:transitions"
 
 interface Props {
   title: string
   description: string
+  /** Imagen social. Por defecto, la del perfil. */
+  ogImage?: string
+  /** Marca la página como no indexable. */
+  noindex?: boolean
 }
 
-const { description, title } = Astro.props
+const { description, title, ogImage = profile.meta.ogImage, noindex = false } = Astro.props
+
+const { meta } = profile
+const siteUrl = (Astro.site?.href ?? `${meta.site}/`).replace(/\/$/, "")
+const canonical = new URL(Astro.url.pathname, `${siteUrl}/`).href
+const socialImage = new URL(ogImage, `${siteUrl}/`).href
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: meta.name,
+  jobTitle: meta.role,
+  description,
+  url: `${siteUrl}/`,
+  image: new URL(meta.image, `${siteUrl}/`).href,
+  email: `mailto:${meta.email}`,
+  address: { "@type": "PostalAddress", addressLocality: "Lima", addressCountry: "PE" },
+  sameAs: [meta.links.linkedin, meta.links.github],
+  knowsAbout: [
+    "Java",
+    "Spring Boot",
+    "Quarkus",
+    "Keycloak",
+    "OAuth2",
+    "OpenID Connect",
+    "Multi-tenant architecture",
+    "API Gateway",
+    "Resilience4j",
+    "RabbitMQ",
+    "Angular",
+  ],
+  alumniOf: [
+    { "@type": "EducationalOrganization", name: "Universidad Tecnológica del Perú" },
+    { "@type": "EducationalOrganization", name: "IDAT" },
+  ],
+}
+
+const siteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: `${meta.name} — ${meta.role}`,
+  url: `${siteUrl}/`,
+  inLanguage: meta.lang,
+  author: { "@type": "Person", name: meta.name },
+}
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={meta.lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f8fafc" />
-    <meta name="author" content="Mateo Huancho Mariño" />
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#020617" media="(prefers-color-scheme: dark)" />
+    <meta name="author" content={meta.name} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="es_PE" />
+    <meta property="og:site_name" content={meta.name} />
+    <meta property="og:locale" content={meta.locale} />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${meta.name} — ${meta.role}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <ViewTransitions />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(personSchema)} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(siteSchema)} />
+    <ClientRouter />
     <script is:inline>
       const savedTheme = localStorage.getItem("theme")
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches

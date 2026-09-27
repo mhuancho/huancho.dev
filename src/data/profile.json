@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "site": "https://huancho.dev",
+    "name": "Mateo Huancho Mariño",
+    "role": "Senior Backend Engineer",
+    "roleLong": "Senior Backend Engineer — Java · Plataformas multi-tenant · Seguridad e IAM",
+    "title": "Mateo Huancho | Senior Backend Engineer · Java, Keycloak, multi-tenant",
+    "description": "Ingeniero backend con 8 años en Java. Especializado en seguridad e identidad con Keycloak (SPI, OAuth2/OIDC) y plataformas multi-tenant sobre Spring Boot 4, Quarkus 3, API gateways, Resilience4j y RabbitMQ.",
+    "locale": "es_PE",
+    "lang": "es",
+    "location": "Lima, Perú",
+    "availability": "Disponible para nuevas oportunidades · remoto",
+    "email": "mhuanchom@gmail.com",
+    "phone": "+51 918 076 179",
+    "links": {
+      "linkedin": "https://www.linkedin.com/in/mhuancho08",
+      "github": "https://github.com/mhuancho",
+      "cvEs": "/cv/Mateo-Huancho-CV-ES.pdf",
+      "cvEn": "/cv/Mateo-Huancho-CV-EN.pdf"
+    },
+    "image": "/mateo.webp",
+    "ogImage": "/og-image.png"
+  },
+
+  "hero": {
+    "eyebrow": "Senior Backend Engineer · Java",
+    "summary": "8 años construyendo plataformas empresariales en Java. Me especializo en <strong>seguridad e identidad (Keycloak, OAuth2/OIDC) y arquitecturas multi-tenant</strong>: los servicios, gateways y librerías que el resto del equipo consume.",
+    "focusAreas": [
+      "Java 21",
+      "Spring Boot 4",
+      "Quarkus 3",
+      "Keycloak 26",
+      "Resilience4j",
+      "RabbitMQ",
+      "Angular 21 / Nx"
+    ]
+  },
+
+  "about": {
+    "paragraphs": [
+      "Soy <strong>Senior Backend Engineer</strong> con 8 años en el ciclo completo de soluciones empresariales: diseño de dominio, contratos, seguridad, persistencia, integración, pruebas y operación.",
+      "Mi foco está en construir servicios desacoplados y mantenibles con arquitectura hexagonal. Trabajo con <strong>Java 21, Spring Boot 4, Quarkus 3 y Keycloak</strong>, y me interesa especialmente la parte que casi nadie quiere tocar: identidad, multi-tenancy y qué pasa cuando una dependencia se cae.",
+      "Actualmente trabajo sobre una plataforma de facturación electrónica multiempresa de alto volumen: creé de cero 12 de sus 24 repositorios, entre ellos la capa de identidad sobre Keycloak, las librerías corporativas de contratos y resiliencia, cuatro API gateways y el procesamiento asíncrono de documentos.",
+      "La experiencia complementaria en Angular, micro-frontends con Nx y Native Federation, y antes en Android, me permite diseñar integraciones backend/frontend con límites y responsabilidades claras."
+    ],
+    "facts": [
+      { "label": "Formación actual", "value": "Ingeniería de Sistemas e Informática", "detail": "UTP · en curso" },
+      { "label": "Título profesional", "value": "Telemática", "detail": "IDAT" },
+      { "label": "Ubicación", "value": "Lima, Perú", "detail": "Abierto a remoto (LATAM / EU / US)" },
+      { "label": "Idiomas", "value": "Español nativo · Inglés intermedio", "detail": "Lectura y escritura técnica" }
+    ]
+  },
+
+  "skillGroups": [
+    {
+      "title": "Backend",
+      "description": "Servicios robustos, reactivos y orientados a dominio.",
+      "skills": ["Java 21 / 17", "Virtual Threads", "Spring Boot 4", "Spring WebFlux", "Quarkus 3", "JAX-RS / MicroProfile", "Panache", "Gradle (Kotlin DSL)"]
+    },
+    {
+      "title": "Seguridad e identidad",
+      "description": "Identidad centralizada y acceso controlado por empresa.",
+      "skills": ["Keycloak 26", "SPI: Authenticator / FormAction / EmailSender", "Temas FreeMarker", "OAuth2 / OIDC", "JWT / JWKS", "RBAC", "MFA / TOTP", "API keys", "Provisioning Just-In-Time"]
+    },
+    {
+      "title": "Arquitectura e integración",
+      "description": "Límites claros, contratos explícitos y consistencia operativa.",
+      "skills": ["Arquitectura hexagonal", "Microservicios", "API Gateway", "Capa de experiencia (BFF)", "Multi-tenancy", "Contract-first / OpenAPI", "Librerías compartidas multi-framework"]
+    },
+    {
+      "title": "Resiliencia y observabilidad",
+      "description": "Fallos aislados y sistemas que se pueden diagnosticar.",
+      "skills": ["Resilience4j", "Circuit breaker", "Retry / Bulkhead", "Time limiter", "Backpressure", "Micrometer", "Prometheus", "Health checks", "Trace headers"]
+    },
+    {
+      "title": "Mensajería y procesamiento",
+      "description": "Trabajo fuera del camino síncrono, con garantías.",
+      "skills": ["Spring Cloud Stream", "RabbitMQ", "Dead-letter queues", "Idempotencia", "Reintentos y reencolado", "Procesamiento por bloques", "Tareas programadas"]
+    },
+    {
+      "title": "Datos",
+      "description": "Persistencia relacional, reactiva y multi-motor.",
+      "skills": ["PostgreSQL", "SQL Server", "JPA / Hibernate", "Hibernate Panache", "R2DBC", "JDBC", "Flyway", "MapStruct"]
+    },
+    {
+      "title": "Frontend",
+      "description": "Experiencia complementaria para plataformas desacopladas.",
+      "skills": ["Angular 21", "Standalone Components", "Signals", "Nx monorepo", "Native Federation", "keycloak-js", "Tailwind CSS", "RxJS"]
+    },
+    {
+      "title": "Calidad y cloud",
+      "description": "Código verificable y desplegable.",
+      "skills": ["JUnit 5", "Mockito", "RestAssured", "JaCoCo", "SonarQube", "AWS S3 / SES", "AWS CodeCommit"]
+    },
+    {
+      "title": "Experiencia previa",
+      "description": "Tecnologías de proyectos anteriores, no de mi trabajo actual.",
+      "skills": ["Camunda 7/8", "BPMN / DMN", "Kafka", "Redis", "Micronaut", "OpenFeign", "Alfresco", "Android", "Docker"]
+    }
+  ],
+
+  "experience": [
+    {
+      "date": "Mayo 2024 - Actualidad",
+      "title": "Senior Backend Engineer (Java)",
+      "company": "Complexless",
+      "description": "Plataforma de facturación electrónica multiempresa de alto volumen: ~23 servicios backend en Spring Boot 4 y Quarkus 3, y 4 aplicaciones Angular 21. Creé de cero 12 de los 24 repositorios.",
+      "highlights": [
+        "Diseñé la capa de identidad sobre Keycloak 26: dos extensiones SPI propias (autenticador por empresa, preregistro de usuarios secundarios, proveedor de correo) y dos temas de login con MFA TOTP por QR, 9 idiomas y branding por dominio.",
+        "Resolví la migración de usuarios heredados sin pedirles cambiar la contraseña: verificación de hashes legacy con comparación en tiempo constante y provisioning Just-In-Time, con la migración de la empresa completa en hilos virtuales fuera del hilo de petición.",
+        "Construí la librería corporativa de contratos y seguridad que consumen los servicios Quarkus y Spring: respuesta tipada, paginación, contexto multi-tenant desde claims sin acoplarse a ningún framework y autoconfiguración de resource server con JWKS.",
+        "Diseñé la estrategia de resiliencia: librería propia que compone retry, time limiter, circuit breaker y bulkhead sobre hilos virtuales, más un gateway dedicado con 7 circuit breakers y fallbacks que aísla los sistemas heredados.",
+        "Creé 4 API gateways con Spring Cloud Gateway (portal, público, integradores y resiliencia): rutas declarativas, filtros de trazabilidad y enrutamiento por empresa con caché TTL y consulta única en vuelo, sin base de datos en el edge.",
+        "Saqué el procesamiento masivo de documentos del camino síncrono con Spring Cloud Stream y RabbitMQ: idempotencia persistida, DLQ con republicación, reencolado técnico programado y procesamiento por bloques.",
+        "Construí los servicios de dominio de mayor volumen (118 endpoints REST y 30 entidades en gestión de facturación; registro de compras reactivo con WebFlux y R2DBC) y módulos de las plataformas de micro-frontends Angular 21 con Nx y Native Federation."
+      ],
+      "technologies": ["Java 21", "Spring Boot 4", "Quarkus 3", "Keycloak 26", "Resilience4j", "RabbitMQ", "Angular 21 / Nx"]
+    },
+    {
+      "date": "Octubre 2018 - Abril 2024",
+      "title": "Java Developer",
+      "company": "Sagone - Techera",
+      "description": "Desarrollo, evolución e integración de soluciones para sectores regulados y organismos públicos con operación continua.",
+      "highlights": [
+        "Lideré la automatización de procesos regulatorios del Sistema de Transmisión Eléctrica (OSINERGMIN) con Camunda 7 y BPMN, integrando motor de procesos, servicios de negocio y persistencia con trazabilidad de estados; optimicé cargas intensivas con Redis.",
+        "Desarrollé microservicios contract-first con OpenAPI, arquitectura hexagonal y capa de experiencia para VUCE 2.0 (comercio exterior): procesos de naves, seguimiento de trámites, carga masiva, firma digital, reportes y pasarela de pago.",
+        "Desarrollé y mantuve la aplicación Android FACILITO (OSINERGMIN), de uso ciudadano: APIs REST, geolocalización, filtros y listados, con foco en rendimiento y conectividad intermitente.",
+        "Integré gestión documental con Alfresco e interoperabilidad REST/SOAP con servicios del Estado, separando contratos externos del modelo interno."
+      ],
+      "technologies": ["Java", "Spring Boot", "Quarkus", "Camunda 7", "Kafka", "Redis", "Android", "Alfresco"]
+    },
+    {
+      "date": "Octubre 2015 - Octubre 2017",
+      "title": "Practicante / Programador Junior",
+      "company": "Solución",
+      "description": "Inicio profesional en desarrollo y soporte de aplicaciones empresariales.",
+      "highlights": [
+        "Desarrollo con Java (JSP, Servlets, MVC, DAO) y SQL.",
+        "Soporte técnico, QA funcional y pruebas técnicas."
+      ],
+      "technologies": ["Java", "JSP", "Servlets", "MVC", "SQL"]
+    }
+  ]
+}

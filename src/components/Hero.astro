@@ -1,10 +1,14 @@
 ---
 import Badge from "@/components/Badge.astro"
+import DownloadIcon from "@/components/icons/Download.astro"
+import GitHubIcon from "@/components/icons/GitHub.astro"
 import LinkedInIcon from "@/components/icons/LinkedIn.astro"
 import MailIcon from "@/components/icons/Mail.astro"
 import SocialPill from "@/components/SocialPill.astro"
+import profile from "@/data/profile.json"
 
-const focusAreas = ["Java 21", "Spring Boot 4", "Quarkus", "Keycloak", "RabbitMQ", "Angular 21 / Nx"]
+const { meta, hero } = profile
+const focusAreas = hero.focusAreas
 ---
 
 <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16">
@@ -12,25 +16,25 @@ const focusAreas = ["Java 21", "Spring Boot 4", "Quarkus", "Keycloak", "RabbitMQ
     <div class="mb-6 flex flex-wrap items-center gap-3">
       <img
         class="size-14 rounded-2xl object-cover shadow-lg ring-1 ring-black/10 sm:size-16 lg:hidden"
-        src="/mateo.webp"
-        alt="Mateo Huancho Mariño"
+        src={meta.image}
+        alt={meta.name}
         width="64"
         height="64"
+        loading="eager"
+        fetchpriority="high"
       />
-      <Badge>Disponible para nuevas oportunidades</Badge>
+      <Badge>{meta.availability}</Badge>
     </div>
     <p class="mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-blue-700 dark:text-blue-300">
-      Backend Java Senior Developer
+      {hero.eyebrow}
     </p>
     <h1 class="text-4xl font-bold tracking-tight text-slate-950 sm:text-6xl dark:text-white">
-      Mateo Huancho Mariño
+      {meta.name}
     </h1>
-    <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-700 sm:text-xl dark:text-slate-300">
-      Más de 7 años diseñando, modernizando y estabilizando plataformas
-      empresariales con <strong class="font-semibold text-slate-950 dark:text-white">Java, microservicios, gateways, IAM y mensajería asíncrona</strong>.
-      Enfoque en arquitectura mantenible, resiliencia y evolución sostenible de
-      sistemas críticos de alto volumen.
-    </p>
+    <p
+      class="mt-6 max-w-2xl text-lg leading-8 text-slate-700 sm:text-xl dark:text-slate-300"
+      set:html={hero.summary}
+    />
     <ul class="mt-7 flex flex-wrap gap-2" aria-label="Tecnologías principales">
       {
         focusAreas.map((technology) => (
@@ -40,24 +44,41 @@ const focusAreas = ["Java 21", "Spring Boot 4", "Quarkus", "Keycloak", "RabbitMQ
         ))
       }
     </ul>
-    <nav class="mt-8 flex flex-wrap gap-3" aria-label="Enlaces de contacto">
-      <SocialPill href="mailto:mhuanchom@gmail.com">
+    <nav class="mt-8 flex flex-wrap gap-3" aria-label="Enlaces de contacto y descarga de CV">
+      <SocialPill href={`mailto:${meta.email}`}>
         <MailIcon class="size-4" />
         Contactar
       </SocialPill>
-      <SocialPill href="https://www.linkedin.com/in/mhuancho08" target="_blank">
+      <SocialPill href={meta.links.linkedin} target="_blank">
         <LinkedInIcon class="size-4" />
         LinkedIn
       </SocialPill>
+      <SocialPill href={meta.links.github} target="_blank">
+        <GitHubIcon class="size-4" />
+        GitHub
+      </SocialPill>
+      <SocialPill href={meta.links.cvEs} download>
+        <DownloadIcon class="size-4" />
+        CV (ES)
+      </SocialPill>
+      <SocialPill href={meta.links.cvEn} download>
+        <DownloadIcon class="size-4" />
+        CV (EN)
+      </SocialPill>
     </nav>
+    <p class="mt-4 text-sm text-slate-600 dark:text-slate-400">
+      {meta.location} · {meta.roleLong}
+    </p>
   </div>
   <div class="relative hidden lg:block">
     <div class="absolute -inset-4 -z-10 rounded-[2rem] bg-gradient-to-br from-blue-500/20 via-cyan-400/10 to-emerald-400/20 blur-2xl"></div>
     <img
-      src="/mateo.webp"
-      alt="Mateo Huancho Mariño"
+      src={meta.image}
+      alt={meta.name}
       width="288"
       height="288"
+      loading="eager"
+      fetchpriority="high"
       class="aspect-square w-72 rotate-2 rounded-[2rem] object-cover shadow-2xl ring-1 ring-black/10 dark:ring-white/15"
     />
   </div>

@@ -1,49 +1,30 @@
+---
+import profile from "@/data/profile.json"
+
+const { about } = profile
+---
+
 <div class="grid gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(16rem,0.6fr)]">
   <article class="space-y-5 text-lg leading-8 text-slate-700 dark:text-slate-300">
-    <p>
-      Soy <strong class="font-semibold text-slate-950 dark:text-white">Backend Java Senior Developer</strong>
-      con experiencia en el ciclo completo de soluciones empresariales: diseño
-      de dominio, contratos, seguridad, persistencia, integración, pruebas y
-      operación.
-    </p>
-    <p>
-      Mi foco está en construir servicios desacoplados y mantenibles con
-      arquitectura hexagonal y Clean Architecture. Trabajo especialmente con
-      <strong class="font-semibold text-slate-950 dark:text-white">Java, Spring Boot, Quarkus, Micronaut, Keycloak y Camunda</strong>,
-      sin perder la visión integral del producto.
-    </p>
-    <p>
-      Últimamente he trabajado sobre una plataforma FACTUS PSE de facturación
-      electrónica de alto volumen: gateways de entrada, resiliencia con
-      <strong class="font-semibold text-slate-950 dark:text-white">Resilience4j</strong>,
-      procesamiento asíncrono por lotes con RabbitMQ y librerías corporativas
-      que unifican contratos entre servicios Quarkus y Spring Boot.
-    </p>
-    <p>
-      La experiencia complementaria en Angular, Micro-Frontends con Nx y Native
-      Federation, y Android me permite colaborar con equipos multidisciplinarios
-      y diseñar integraciones backend/frontend con límites y responsabilidades
-      claras.
-    </p>
+    {about.paragraphs.map((paragraph) => <p set:html={paragraph} />)}
   </article>
 
-  <aside class="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/60" aria-label="Formación y perfil">
+  <aside
+    class="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/60"
+    aria-label="Formación y perfil"
+  >
     <dl class="space-y-5">
-      <div>
-        <dt class="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300">Formación actual</dt>
-        <dd class="mt-1 font-semibold text-slate-950 dark:text-white">Ingeniería de Sistemas e Informática</dd>
-        <dd class="text-sm text-slate-600 dark:text-slate-400">UTP - En curso</dd>
-      </div>
-      <div class="border-t border-slate-200 pt-5 dark:border-slate-800">
-        <dt class="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300">Título profesional</dt>
-        <dd class="mt-1 font-semibold text-slate-950 dark:text-white">Telemática</dd>
-        <dd class="text-sm text-slate-600 dark:text-slate-400">IDAT</dd>
-      </div>
-      <div class="border-t border-slate-200 pt-5 dark:border-slate-800">
-        <dt class="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300">Idiomas</dt>
-        <dd class="mt-1 font-semibold text-slate-950 dark:text-white">Inglés intermedio</dd>
-        <dd class="text-sm text-slate-600 dark:text-slate-400">Lectura y escritura técnica</dd>
-      </div>
+      {
+        about.facts.map((fact, index) => (
+          <div class={index === 0 ? "" : "border-t border-slate-200 pt-5 dark:border-slate-800"}>
+            <dt class="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300">
+              {fact.label}
+            </dt>
+            <dd class="mt-1 font-semibold text-slate-950 dark:text-white">{fact.value}</dd>
+            <dd class="text-sm text-slate-600 dark:text-slate-400">{fact.detail}</dd>
+          </div>
+        ))
+      }
     </dl>
   </aside>
 </div>

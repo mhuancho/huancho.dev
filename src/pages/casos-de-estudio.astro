@@ -1,0 +1,150 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import caseStudies from "@/data/case-studies.json"
+import profile from "@/data/profile.json"
+
+const title = `Casos de estudio | ${profile.meta.name}`
+const description =
+  "Casos de estudio técnicos: identidad multiempresa sobre Keycloak, resiliencia con Resilience4j, procesamiento asíncrono con RabbitMQ, capa de experiencia multi-tenant y micro-frontends federados con Angular."
+---
+
+<Layout {title} {description}>
+  <main id="contenido" class="px-5 sm:px-6">
+    <SectionContainer id="inicio" class="pb-14 pt-32 sm:pt-40">
+      <p class="mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-blue-700 dark:text-blue-300">
+        Casos de estudio
+      </p>
+      <h1 class="text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl dark:text-white">
+        Problemas reales y las decisiones que tomé
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-700 dark:text-slate-300">
+        Cada caso sigue la misma estructura: contexto, problema, mi rol, la solución, las decisiones
+        con su contrapartida y qué haría distinto hoy. Los sistemas están descritos de forma genérica
+        por confidencialidad.
+      </p>
+
+      <nav class="mt-8 flex flex-wrap gap-2" aria-label="Índice de casos de estudio">
+        {
+          caseStudies.map((study) => (
+            <a
+              href={`#${study.slug}`}
+              class="rounded-full border border-slate-300/80 bg-white/70 px-3 py-1 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-900 hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-200 dark:hover:bg-slate-100 dark:hover:text-slate-950"
+            >
+              {study.eyebrow}
+            </a>
+          ))
+        }
+      </nav>
+    </SectionContainer>
+
+    <div class="space-y-20 pb-16">
+      {
+        caseStudies.map((study) => (
+          <SectionContainer id={study.slug} class="scroll-m-28">
+            <article class="rounded-3xl border border-slate-200 bg-white/75 p-6 shadow-sm sm:p-9 dark:border-slate-800 dark:bg-slate-900/70">
+              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue-700 dark:text-blue-300">
+                {study.eyebrow}
+              </p>
+              <h2 class="mt-3 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl dark:text-white">
+                {study.title}
+              </h2>
+              <p class="mt-4 text-lg leading-8 text-slate-700 dark:text-slate-300">{study.summary}</p>
+
+              <div class="mt-8 grid gap-8 lg:grid-cols-2">
+                <div>
+                  <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    Contexto
+                  </h3>
+                  <p class="mt-2 leading-7 text-slate-700 dark:text-slate-300">{study.context}</p>
+                </div>
+                <div>
+                  <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    Problema
+                  </h3>
+                  <ul class="mt-2 space-y-2 leading-7 text-slate-700 dark:text-slate-300">
+                    {study.problem.map((item) => (
+                      <li class="flex gap-3">
+                        <span aria-hidden="true" class="mt-3 size-1.5 shrink-0 rounded-full bg-rose-500" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div class="mt-8 rounded-2xl bg-slate-100/80 p-5 dark:bg-slate-800/50">
+                <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  Mi rol
+                </h3>
+                <p class="mt-2 leading-7 text-slate-700 dark:text-slate-300">{study.role}</p>
+              </div>
+
+              <div class="mt-8">
+                <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  Solución
+                </h3>
+                <ul class="mt-2 space-y-2 leading-7 text-slate-700 dark:text-slate-300">
+                  {study.solution.map((item) => (
+                    <li class="flex gap-3">
+                      <span aria-hidden="true" class="mt-3 size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="mt-8">
+                <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  Decisiones y contrapartidas
+                </h3>
+                <dl class="mt-3 grid gap-4 md:grid-cols-2">
+                  {study.decisions.map((decision) => (
+                    <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-800">
+                      <dt class="font-semibold text-slate-950 dark:text-white">{decision.title}</dt>
+                      <dd class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+                        {decision.detail}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+
+              <div class="mt-8 grid gap-8 lg:grid-cols-2">
+                <div>
+                  <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    Resultado
+                  </h3>
+                  <p class="mt-2 leading-7 text-slate-700 dark:text-slate-300">{study.result}</p>
+                </div>
+                <div>
+                  <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    Qué haría distinto
+                  </h3>
+                  <p class="mt-2 leading-7 text-slate-700 dark:text-slate-300">{study.nextTime}</p>
+                </div>
+              </div>
+
+              <ul class="mt-8 flex flex-wrap gap-2" aria-label={`Stack del caso ${study.title}`}>
+                {study.stack.map((item) => (
+                  <li class="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </SectionContainer>
+        ))
+      }
+    </div>
+
+    <SectionContainer id="volver" class="pb-20">
+      <a
+        href="/#proyectos"
+        class="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-800 transition hover:border-slate-900 hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-100 dark:hover:text-slate-950"
+      >
+        ← Volver a los proyectos
+      </a>
+    </SectionContainer>
+  </main>
+</Layout>
