@@ -1,0 +1,11 @@
+/*
+ * Punto de entrada de Tailwind.
+ *
+ * Antes lo inyectaba la integracion @astrojs/tailwind, que solo soporta Astro 3/4/5
+ * y rompia `npm install` en Netlify al subir a Astro 7 (ERESOLVE).
+ * Ahora Tailwind se procesa con PostCSS nativo (postcss.config.mjs), que es
+ * independiente de la version de Astro, y este archivo se importa desde el layout.
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
